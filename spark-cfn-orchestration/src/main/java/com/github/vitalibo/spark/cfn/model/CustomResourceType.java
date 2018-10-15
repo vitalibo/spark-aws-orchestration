@@ -1,12 +1,13 @@
 package com.github.vitalibo.spark.cfn.model;
 
 import com.github.vitalibo.cfn.resource.model.ResourceProperties;
+import com.github.vitalibo.cfn.resource.model.ResourceType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ResourceType implements com.github.vitalibo.cfn.resource.model.ResourceType {
+public enum CustomResourceType implements ResourceType {
 
     SparkJob("Custom::SparkJob", SparkJobResourceProperties.class);
 
