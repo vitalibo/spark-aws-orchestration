@@ -7,14 +7,14 @@ import lombok.Data;
 @Data
 public class SparkJobResourceData extends ResourceData<SparkJobResourceData> {
 
-    @JsonProperty(value = "SessionId")
-    private String sessionId;
+    @JsonProperty(value = "BatchId")
+    private Integer batchId;
 
     @JsonProperty(value = "ApplicationId")
     private String applicationId;
 
-    public SparkJobResourceData withSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public SparkJobResourceData withBatchId(Integer batchId) {
+        this.batchId = batchId;
         return this;
     }
 

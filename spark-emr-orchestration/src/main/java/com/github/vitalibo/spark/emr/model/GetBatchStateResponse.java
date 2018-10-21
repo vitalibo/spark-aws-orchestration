@@ -10,14 +10,14 @@ public class GetBatchStateResponse {
     private Integer batchId;
 
     @JsonProperty(value = "state")
-    private String state;
+    private BatchState state;
 
     public GetBatchStateResponse withBatchId(Integer batchId) {
         this.batchId = batchId;
         return this;
     }
 
-    public GetBatchStateResponse withState(String state) {
+    public GetBatchStateResponse withState(BatchState state) {
         this.state = state;
         return this;
     }

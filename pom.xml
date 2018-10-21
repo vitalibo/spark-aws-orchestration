@@ -37,6 +37,11 @@
         <dependencies>
             <dependency>
                 <groupId>com.github.vitalibo</groupId>
+                <artifactId>spark-emr-orchestration</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.vitalibo</groupId>
                 <artifactId>cfn-custom-resource</artifactId>
                 <version>${cfn.custom.resource.version}</version>
             </dependency>

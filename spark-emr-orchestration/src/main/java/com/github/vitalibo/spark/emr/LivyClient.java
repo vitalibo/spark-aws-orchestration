@@ -4,34 +4,34 @@ import com.github.vitalibo.spark.emr.model.*;
 
 public interface LivyClient {
 
-    /**
-     * Returns all the active batch sessions.
-     */
     GetBatchesResponse getBatches(GetBatchesRequest request);
 
-    /**
-     * The created {@link com.github.vitalibo.spark.emr.model.Batch} object.
-     */
     CreateBatchResponse createBatch(CreateBatchRequest request);
 
-    /**
-     * Returns the batch session information.
-     */
-    GetBatchResponse getBatch(GetBatchesRequest request);
+    GetBatchResponse getBatch(GetBatchRequest request);
 
-    /**
-     * Returns the state of batch session
-     */
+    default GetBatchResponse getBatch(Integer batchId) {
+        return this.getBatch(
+            new GetBatchRequest()
+                .withBatchId(batchId));
+    }
+
     GetBatchStateResponse getBatchState(GetBatchStateRequest request);
 
-    /**
-     * Kills the Batch job.
-     */
+    default GetBatchStateResponse getBatchState(Integer batchId) {
+        return this.getBatchState(
+            new GetBatchStateRequest()
+                .withBatchId(batchId));
+    }
+
     KillBatchResponse killBatch(KillBatchRequest request);
 
-    /**
-     * Gets the log lines from this batch.
-     */
+    default KillBatchResponse killBatch(Integer batchId) {
+        return this.killBatch(
+            new KillBatchRequest()
+                .withBatchId(batchId));
+    }
+
     GetBatchLogResponse getBatchLog(GetBatchLogRequest request);
 
 }

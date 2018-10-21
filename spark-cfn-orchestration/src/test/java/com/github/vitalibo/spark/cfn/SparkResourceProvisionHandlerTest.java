@@ -6,7 +6,7 @@ public class SparkResourceProvisionHandlerTest {
 
     @Test
     public void test() {
-
+        new SparkResourceProvisionHandler();
     }
 
 }

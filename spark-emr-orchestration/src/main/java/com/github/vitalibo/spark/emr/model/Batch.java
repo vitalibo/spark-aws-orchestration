@@ -10,7 +10,7 @@ import java.util.Map;
 public class Batch {
 
     @JsonProperty(value = "id")
-    private Integer batchId;
+    private Integer id;
 
     @JsonProperty(value = "appId")
     private String applicationId;
@@ -22,10 +22,10 @@ public class Batch {
     private List<String> log;
 
     @JsonProperty(value = "state")
-    private String state;
+    private BatchState state;
 
     public Batch withBatchId(Integer batchId) {
-        this.batchId = batchId;
+        this.id = batchId;
         return this;
     }
 
@@ -44,7 +44,7 @@ public class Batch {
         return this;
     }
 
-    public Batch withState(String state) {
+    public Batch withState(BatchState state) {
         this.state = state;
         return this;
     }

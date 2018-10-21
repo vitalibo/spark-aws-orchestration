@@ -10,6 +10,12 @@ import java.util.Map;
 @Data
 public class SparkJobResourceProperties extends ResourceProperties {
 
+    @JsonProperty(value = "LivyHost")
+    private String livyHost;
+
+    @JsonProperty(value = "LivyPort")
+    private Integer livyPort;
+
     @JsonProperty(value = "File")
     private String file;
 
@@ -55,7 +61,7 @@ public class SparkJobResourceProperties extends ResourceProperties {
     @JsonProperty(value = "Name")
     private String name;
 
-    @JsonProperty(value = "Conf")
-    private Map<String, String> conf;
+    @JsonProperty(value = "Configuration")
+    private Map<String, String> configuration;
 
 }

@@ -97,7 +97,7 @@ public class CreateBatchRequest {
         return this;
     }
 
-    public CreateBatchRequest withdriverMemory(Integer driverCores) {
+    public CreateBatchRequest withDriverCores(Integer driverCores) {
         this.driverCores = driverCores;
         return this;
     }
