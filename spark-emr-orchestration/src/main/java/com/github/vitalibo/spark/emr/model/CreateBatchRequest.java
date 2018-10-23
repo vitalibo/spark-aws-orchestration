@@ -1,5 +1,7 @@
 package com.github.vitalibo.spark.emr.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -7,54 +9,55 @@ import java.util.List;
 import java.util.Map;
 
 @Data
+@JsonInclude(Include.NON_NULL)
 public class CreateBatchRequest {
 
-    @JsonProperty(value = "File")
+    @JsonProperty(value = "file")
     private String file;
 
-    @JsonProperty(value = "ProxyUser")
+    @JsonProperty(value = "proxyUser")
     private String proxyUser;
 
-    @JsonProperty(value = "ClassName")
+    @JsonProperty(value = "className")
     private String className;
 
-    @JsonProperty(value = "Args")
+    @JsonProperty(value = "args")
     private List<String> args;
 
-    @JsonProperty(value = "Jars")
+    @JsonProperty(value = "jars")
     private List<String> jars;
 
-    @JsonProperty(value = "PyFiles")
+    @JsonProperty(value = "pyFiles")
     private List<String> pyFiles;
 
-    @JsonProperty(value = "Files")
+    @JsonProperty(value = "files")
     private List<String> files;
 
-    @JsonProperty(value = "DriverMemory")
+    @JsonProperty(value = "driverMemory")
     private String driverMemory;
 
-    @JsonProperty(value = "driverMemory")
+    @JsonProperty(value = "driverCores")
     private Integer driverCores;
 
-    @JsonProperty(value = "ExecutorMemory")
+    @JsonProperty(value = "executorMemory")
     private String executorMemory;
 
-    @JsonProperty(value = "ExecutorCores")
+    @JsonProperty(value = "executorCores")
     private Integer executorCores;
 
-    @JsonProperty(value = "NumExecutors")
+    @JsonProperty(value = "numExecutors")
     private Integer numExecutors;
 
-    @JsonProperty(value = "Archives")
+    @JsonProperty(value = "archives")
     private List<String> archives;
 
-    @JsonProperty(value = "Queue")
+    @JsonProperty(value = "queue")
     private String queue;
 
-    @JsonProperty(value = "Name")
+    @JsonProperty(value = "name")
     private String name;
 
-    @JsonProperty(value = "Conf")
+    @JsonProperty(value = "conf")
     private Map<String, String> configuration;
 
     public CreateBatchRequest withFile(String file) {

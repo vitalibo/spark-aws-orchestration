@@ -1,0 +1,12 @@
+{
+  "id": 111,
+  "from": 0,
+  "total": 5,
+  "log": [
+    "stdout: ",
+    "18/10/23 17:38:37 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable",
+    "18/10/23 17:38:40 WARN Client: Neither spark.yarn.jars nor spark.yarn.archive is set, falling back to uploading libraries under SPARK_HOME.",
+    "\nstderr: ",
+    "\nYARN Diagnostics: "
+  ]
+}

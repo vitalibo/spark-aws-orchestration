@@ -1,0 +1,22 @@
+{
+  "from": 10,
+  "total": 98,
+  "sessions": [
+    {
+      "id": 111,
+      "state": "running",
+      "appId": "application_1540212897167_0054",
+      "appInfo": {
+        "driverLogUrl": "http://ip-10-0-28-205.us-west-2.compute.internal:8042/node/containerlogs/container_1540212897167_0054_01_000001/livy",
+        "sparkUiUrl": "http://ip-10-0-15-92.us-west-2.compute.internal:20888/proxy/application_1540212897167_0054/"
+      },
+      "log": [
+        "stdout: ",
+        "18/10/23 17:38:37 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable",
+        "18/10/23 17:38:40 WARN Client: Neither spark.yarn.jars nor spark.yarn.archive is set, falling back to uploading libraries under SPARK_HOME.",
+        "\nstderr: ",
+        "\nYARN Diagnostics: "
+      ]
+    }
+  ]
+}

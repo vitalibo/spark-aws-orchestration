@@ -14,8 +14,8 @@ public class GetBatchLogResponse {
     @JsonProperty(value = "from")
     private Integer from;
 
-    @JsonProperty(value = "size")
-    private Integer size;
+    @JsonProperty(value = "total")
+    private Integer total;
 
     @JsonProperty(value = "log")
     private List<String> log;
@@ -30,8 +30,8 @@ public class GetBatchLogResponse {
         return this;
     }
 
-    public GetBatchLogResponse withSize(Integer size) {
-        this.size = size;
+    public GetBatchLogResponse withTotal(Integer total) {
+        this.total = total;
         return this;
     }
 
