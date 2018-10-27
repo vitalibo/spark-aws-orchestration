@@ -106,6 +106,7 @@ public class LivyHttpClientTest {
         KillBatchResponse actual = livyClient.killBatch(request);
 
         Assert.assertNotNull(actual);
+        Assert.assertEquals(actual.getMessage(), "deleted");
         WireMock.verify(WireMock.deleteRequestedFor(WireMock.urlPathEqualTo("/batches/124")));
     }
 

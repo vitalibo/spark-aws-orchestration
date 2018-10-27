@@ -1,0 +1,30 @@
+{
+  "file": "s3://spark/examples/jars/spark-examples-2.3.2.jar",
+  "proxyUser": "hadoop",
+  "className": "org.apache.spark.examples.SparkPi",
+  "args": [
+    "10"
+  ],
+  "jars": [
+    "s3://spark/examples/jars/spark-examples.jar"
+  ],
+  "pyFiles": [
+    "s3://spark/examples/jars/spark-examples.py"
+  ],
+  "files": [
+    "s3://spark/examples/jars/spark-examples.ini"
+  ],
+  "driverMemory": "512m",
+  "driverCores": 1,
+  "executorMemory": "2G",
+  "executorCores": 2,
+  "numExecutors": 3,
+  "archives": [
+    "s3://spark/examples/jars/spark-examples.zip"
+  ],
+  "queue": "default",
+  "name": "SparkPi",
+  "conf": {
+    "spark.master": "spark://5.6.7.8:7077"
+  }
+}
