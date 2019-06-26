@@ -7,7 +7,7 @@ public class Application {
     private static final Factory factory = Factory.getInstance();
 
     public static void main(String[] args) {
-        final ActivityDispatcher dispatcher = factory.createDispatcher();
+        final ActivityDispatcher dispatcher = factory.createDispatcher(args);
 
         try (ActivityWorker worker = factory.createWorker()) {
             for (Activity activity : dispatcher.fetch()) {
@@ -25,5 +25,4 @@ public class Application {
             }
         }
     }
-
 }

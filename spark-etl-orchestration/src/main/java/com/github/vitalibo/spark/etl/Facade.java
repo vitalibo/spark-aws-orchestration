@@ -6,6 +6,6 @@ import com.github.vitalibo.spark.etl.model.ActivityOutput;
 @FunctionalInterface
 public interface Facade<Input extends ActivityInput, Output extends ActivityOutput> {
 
-    Output process(ActivityWorker.Context context, Input input);
+    Output process(StepFunctionProxy proxy, Input input);
 
 }

@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'This template describe set of Custom Resources that enables Apache Spark support for CloudFormation'
+Parameters:
+  Environment:
+    Type: 'String'
+    Description: 'Environment name'
+  Name:
+    Type: 'String'
+    Description: 'Service name that will be prefixed to resource names'
+Resources:
+  Activity:
+    Type: 'AWS::StepFunctions::Activity'
+    Properties:
+      Name: !Sub 'spark-job'
+      Tags:
+        - Key: 'Environment'
+          Value: !Ref Environment
+        - Key: 'Product'
+          Value: !Ref Name
+  Role:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - states.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: 'Runtime'
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: !GetAtt
+                  - LogGroup
+                  - Arn
+      RoleName: !Sub '${Name}-spark-job-activity'
+  LogGroup:
+    Type: 'AWS::Logs::LogGroup'
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${Name}-spark-job-activity'
+      RetentionInDays: 3

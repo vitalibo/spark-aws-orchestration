@@ -6,6 +6,8 @@ import com.amazonaws.services.stepfunctions.model.GetActivityTaskResult;
 import com.github.vitalibo.spark.etl.model.Activity;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.List;
@@ -15,18 +17,20 @@ import java.util.concurrent.*;
 @RequiredArgsConstructor
 public class ActivityDispatcher {
 
+    private static final Logger logger = LoggerFactory.getLogger(ActivityDispatcher.class);
+
     private final AWSStepFunctions client;
     private final List<String> activityArns;
 
     public Iterable<Activity> fetch() {
-        return () -> new DistributedIterator(client, activityArns);
+        return () -> new ConcurrentIterator(client, activityArns);
     }
 
-    static class DistributedIterator extends ExecutorCompletionService<Activity> implements Iterator<Activity> {
+    static class ConcurrentIterator extends ExecutorCompletionService<Activity> implements Iterator<Activity> {
 
         private final AWSStepFunctions client;
 
-        public DistributedIterator(AWSStepFunctions client, List<String> activityArns) {
+        public ConcurrentIterator(AWSStepFunctions client, List<String> activityArns) {
             super(Executors.newFixedThreadPool(activityArns.size()));
             this.client = client;
             activityArns.forEach(arn -> this.submit(new ActivityFetcher(arn)));
@@ -59,7 +63,8 @@ public class ActivityDispatcher {
 
                 } while (Objects.isNull(activityTask.getTaskToken()));
 
-                DistributedIterator.this.submit(this);
+                logger.info("{} - Fetch new activity task", activityArn);
+                ConcurrentIterator.this.submit(this);
                 return new Activity()
                     .withTaskToken(activityTask.getTaskToken())
                     .withJsonInput(activityTask.getInput())
