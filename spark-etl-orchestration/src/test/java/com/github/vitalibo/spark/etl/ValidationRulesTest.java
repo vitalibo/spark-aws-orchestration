@@ -1,6 +1,6 @@
 package com.github.vitalibo.spark.etl;
 
-import com.github.vitalibo.cfn.resource.ResourceProvisionException;
+import com.github.vitalibo.spark.etl.model.ActivityException;
 import com.github.vitalibo.spark.etl.model.SparkActivityInput;
 import com.github.vitalibo.spark.etl.model.SparkActivityInput.Properties;
 import org.testng.annotations.DataProvider;
@@ -31,7 +31,7 @@ public class ValidationRulesTest {
     }
 
     @Test(dataProvider = "samplesIncorrectLivyHost",
-        expectedExceptions = ResourceProvisionException.class,
+        expectedExceptions = ActivityException.class,
         expectedExceptionsMessageRegExp = ".*SparkActivityInput.LivyHost.*")
     public void testFailVerifyLivyHost(String livyHost) {
         SparkActivityInput activityInput = new SparkActivityInput();
@@ -63,7 +63,7 @@ public class ValidationRulesTest {
     }
 
     @Test(dataProvider = "samplesIncorrectLivyPort",
-        expectedExceptions = ResourceProvisionException.class,
+        expectedExceptions = ActivityException.class,
         expectedExceptionsMessageRegExp = ".*SparkActivityInput.LivyPort.*")
     public void testFailVerifyLivyPort(Integer livyPort) {
         SparkActivityInput activityInput = new SparkActivityInput();
@@ -97,7 +97,7 @@ public class ValidationRulesTest {
     }
 
     @Test(dataProvider = "samplesIncorrectFile",
-        expectedExceptions = ResourceProvisionException.class,
+        expectedExceptions = ActivityException.class,
         expectedExceptionsMessageRegExp = ".*SparkActivityInput.Properties.File.*")
     public void testFailVerifyFile(String file) {
         SparkActivityInput activityInput = new SparkActivityInput();
@@ -133,7 +133,7 @@ public class ValidationRulesTest {
     }
 
     @Test(dataProvider = "samplesIncorrectClassName",
-        expectedExceptions = ResourceProvisionException.class,
+        expectedExceptions = ActivityException.class,
         expectedExceptionsMessageRegExp = ".*SparkActivityInput.Properties.ClassName.*")
     public void testFailVerifyClassName(String className) {
         SparkActivityInput activityInput = new SparkActivityInput();
@@ -169,7 +169,7 @@ public class ValidationRulesTest {
     }
 
     @Test(dataProvider = "samplesIncorrectDriverMemory",
-        expectedExceptions = ResourceProvisionException.class,
+        expectedExceptions = ActivityException.class,
         expectedExceptionsMessageRegExp = ".*SparkActivityInput.Properties.DriverMemory.*")
     public void testFailVerifyDriverMemory(String driverMemory) {
         SparkActivityInput activityInput = new SparkActivityInput();
@@ -205,7 +205,7 @@ public class ValidationRulesTest {
     }
 
     @Test(dataProvider = "samplesIncorrectExecutorMemory",
-        expectedExceptions = ResourceProvisionException.class,
+        expectedExceptions = ActivityException.class,
         expectedExceptionsMessageRegExp = ".*SparkActivityInput.Properties.ExecutorMemory.*")
     public void testFailVerifyExecutorMemory(String executorMemory) {
         SparkActivityInput activityInput = new SparkActivityInput();
@@ -241,7 +241,7 @@ public class ValidationRulesTest {
     }
 
     @Test(dataProvider = "samplesIncorrectDriverCores",
-        expectedExceptions = ResourceProvisionException.class,
+        expectedExceptions = ActivityException.class,
         expectedExceptionsMessageRegExp = ".*SparkActivityInput.Properties.DriverCores.*")
     public void testFailVerifyDriverCores(Integer driverCores) {
         SparkActivityInput activityInput = new SparkActivityInput();
@@ -277,7 +277,7 @@ public class ValidationRulesTest {
     }
 
     @Test(dataProvider = "samplesIncorrectExecutorCores",
-        expectedExceptions = ResourceProvisionException.class,
+        expectedExceptions = ActivityException.class,
         expectedExceptionsMessageRegExp = ".*SparkActivityInput.Properties.ExecutorCores.*")
     public void testFailVerifyExecutorCores(Integer executorCores) {
         SparkActivityInput activityInput = new SparkActivityInput();
@@ -313,7 +313,7 @@ public class ValidationRulesTest {
     }
 
     @Test(dataProvider = "samplesIncorrectNumExecutors",
-        expectedExceptions = ResourceProvisionException.class,
+        expectedExceptions = ActivityException.class,
         expectedExceptionsMessageRegExp = ".*SparkActivityInput.Properties.NumExecutors.*")
     public void testFailVerifyNumExecutors(Integer numExecutors) {
         SparkActivityInput activityInput = new SparkActivityInput();

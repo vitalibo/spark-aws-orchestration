@@ -1,6 +1,6 @@
 package com.github.vitalibo.spark.etl;
 
-import com.github.vitalibo.cfn.resource.ResourceProvisionException;
+import com.github.vitalibo.spark.etl.model.ActivityException;
 import com.github.vitalibo.spark.etl.model.SparkActivityInput;
 import com.github.vitalibo.spark.etl.model.SparkActivityInput.Properties;
 
@@ -125,13 +125,13 @@ final class ValidationRules {
 
     private static void requireNonNull(Object value, String fieldName) {
         if (Objects.isNull(value)) {
-            throw new ResourceProvisionException(String.format("Required field '%s' can't be null.", fieldName));
+            throw new ActivityException(String.format("Required field '%s' can't be null.", fieldName));
         }
     }
 
     private static void requireNotEmpty(CharSequence value, String fieldName) {
         if (Objects.isNull(value) || value.length() == 0) {
-            throw new ResourceProvisionException(String.format("Required field '%s' can't be empty.", fieldName));
+            throw new ActivityException(String.format("Required field '%s' can't be empty.", fieldName));
         }
     }
 
@@ -142,7 +142,7 @@ final class ValidationRules {
             }
 
             if (value < lowerBound || value > upperBound) {
-                throw new ResourceProvisionException(
+                throw new ActivityException(
                     String.format("Field '%s' value must be in range [%s, %s].", fieldName, lowerBound, upperBound));
             }
         };
@@ -155,7 +155,7 @@ final class ValidationRules {
             }
 
             if (value < lowerBound) {
-                throw new ResourceProvisionException(
+                throw new ActivityException(
                     String.format("Field '%s' value must be greater than %s.", fieldName, lowerBound));
             }
         };
@@ -170,7 +170,7 @@ final class ValidationRules {
 
             Matcher matcher = pattern.matcher(value);
             if (!matcher.matches()) {
-                throw new ResourceProvisionException(String.format("Required field '%s' don't matches regex `%s`.", fieldName, regex));
+                throw new ActivityException(String.format("Required field '%s' don't matches regex `%s`.", fieldName, regex));
             }
         };
     }
