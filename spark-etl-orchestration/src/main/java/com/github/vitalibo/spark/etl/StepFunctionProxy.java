@@ -6,6 +6,7 @@ import com.amazonaws.services.stepfunctions.model.SendTaskHeartbeatRequest;
 import com.amazonaws.services.stepfunctions.model.SendTaskSuccessRequest;
 import com.amazonaws.services.stepfunctions.model.TaskTimedOutException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,7 @@ public class StepFunctionProxy {
                 .withTaskToken(taskToken));
     }
 
+    @SneakyThrows(InterruptedException.class)
     public boolean taskSyncHeartbeat() {
         int retryAttempts = 0;
         while (true) {
@@ -44,6 +46,7 @@ public class StepFunctionProxy {
 
             } catch (TaskTimedOutException e) {
                 logger.warn(e.getMessage());
+                Thread.sleep(500 * retryAttempts);
                 continue;
             }
 

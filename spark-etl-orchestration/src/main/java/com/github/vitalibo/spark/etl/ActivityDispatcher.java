@@ -20,20 +20,27 @@ public class ActivityDispatcher {
     private static final Logger logger = LoggerFactory.getLogger(ActivityDispatcher.class);
 
     private final AWSStepFunctions client;
-    private final List<String> activityArns;
+    private final List<String> activities;
 
     public Iterable<Activity> fetch() {
-        return () -> new ConcurrentIterator(client, activityArns);
+        ConcurrentIterator iterator = new ConcurrentIterator(client, activities.size());
+        iterator.init(activities);
+        return () -> iterator;
     }
 
-    static class ConcurrentIterator extends ExecutorCompletionService<Activity> implements Iterator<Activity> {
+    @RequiredArgsConstructor
+    static class ConcurrentIterator implements Iterator<Activity> {
 
+        private final CompletionService<Activity> executor;
         private final AWSStepFunctions client;
 
-        public ConcurrentIterator(AWSStepFunctions client, List<String> activityArns) {
-            super(Executors.newFixedThreadPool(activityArns.size()));
-            this.client = client;
-            activityArns.forEach(arn -> this.submit(new ActivityFetcher(arn)));
+        ConcurrentIterator(AWSStepFunctions client, int numberOfThreads) {
+            this(new ExecutorCompletionService<>(Executors.newFixedThreadPool(numberOfThreads)), client);
+        }
+
+        void init(List<String> activities) {
+            activities.forEach(arn ->
+                executor.submit(new ActivityFetcher(arn)));
         }
 
         @Override
@@ -44,7 +51,7 @@ public class ActivityDispatcher {
         @Override
         @SneakyThrows({InterruptedException.class, ExecutionException.class})
         public Activity next() {
-            Future<Activity> future = this.take();
+            Future<Activity> future = executor.take();
             return future.get();
         }
 
@@ -64,7 +71,7 @@ public class ActivityDispatcher {
                 } while (Objects.isNull(activityTask.getTaskToken()));
 
                 logger.info("{} - Fetch new activity task", activityArn);
-                ConcurrentIterator.this.submit(this);
+                executor.submit(this);
                 return new Activity()
                     .withTaskToken(activityTask.getTaskToken())
                     .withJsonInput(activityTask.getInput())
