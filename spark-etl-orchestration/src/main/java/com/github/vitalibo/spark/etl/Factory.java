@@ -42,7 +42,14 @@ public final class Factory {
         return new SparkJobFacade(
             new Rules<>(
                 ValidationRules::verifyLivyHost,
-                ValidationRules::verifyLivyPort),
+                ValidationRules::verifyLivyPort,
+                ValidationRules::verifyPropertyFile,
+                ValidationRules::verifyPropertyClassName,
+                ValidationRules::verifyPropertyDriverMemory,
+                ValidationRules::verifyPropertyDriverCores,
+                ValidationRules::verifyPropertyExecutorMemory,
+                ValidationRules::verifyPropertyExecutorCores,
+                ValidationRules::verifyPropertyNumExecutors),
             (host, port) -> new LivyClientBuilder()
                 .withHost(host)
                 .withPort(port)
