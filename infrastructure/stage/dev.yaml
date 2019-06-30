@@ -1,0 +1,21 @@
+Parameters:
+  Environment: 'dev'
+  Name: 'sao'
+  Bucket: 'sao.svc.dev'
+  ReleaseLabel: 'emr-5.24.1'
+  Vpc: 'vpc-0a054597ef07b91bb'
+  IngressSecurityGroup: 'sg-4ce90cfc05ea403ca'
+  MasterInstanceType: 'm4.large'
+  CoreInstanceType: 'm4.large'
+  CoreInstanceCount: '2'
+  PrivateSubnet: 'subnet-0218d2299fc7fd617'
+  KeyPairName: 'key-name'
+Tags:
+  Environment: 'dev'
+  Product: 'spark-aws-orchestration'
+StackPolicy:
+  Statement:
+    - Effect: Allow
+      NotAction: Update:Delete
+      Principal: '*'
+      Resource: '*'

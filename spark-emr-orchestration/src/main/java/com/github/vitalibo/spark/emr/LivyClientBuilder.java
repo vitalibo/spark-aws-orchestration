@@ -2,6 +2,7 @@ package com.github.vitalibo.spark.emr;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.client.ClientBuilder;
 import java.util.Objects;
@@ -42,6 +43,7 @@ public class LivyClientBuilder {
 
         return build(
             new ClientConfig()
+                .register(JacksonFeature.class)
                 .property(ClientProperties.CONNECT_TIMEOUT, connectionTimeout)
                 .property(ClientProperties.READ_TIMEOUT, readTimeout),
             String.format("%s:%s", host, port));

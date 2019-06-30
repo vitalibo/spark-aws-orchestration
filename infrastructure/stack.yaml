@@ -1,7 +1,268 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description:
+Description: 'This template create infrastructure for orchestration Apache Spark on Amazon EMR'
+Parameters:
+  Environment:
+    Type: String
+    Description: 'Environment name'
+  Name:
+    Type: String
+    Description: 'Service name that will be prefixed to resource names'
+  Bucket:
+    Type: String
+    Description: 'S3 buckets with source codes'
+  ReleaseLabel:
+    Type: String
+    Description: 'The Amazon EMR release label'
+  MasterInstanceType:
+    Type: String
+    Description: 'The EC2 instance type for master instance'
+  CoreInstanceType:
+    Type: String
+    Description: 'The EC2 instance type for core instances'
+  CoreInstanceCount:
+    Type: Number
+    Description: 'Target number of core instances'
+  Vpc:
+    Type: AWS::EC2::VPC::Id
+    Description: 'Amazon VPC Id'
+  IngressSecurityGroup:
+    Type: AWS::EC2::SecurityGroup::Id
+    Description: 'Amazon EMR ingress Security Group Id'
+  PrivateSubnet:
+    Type: AWS::EC2::Subnet::Id
+    Description: 'Identifier of the Amazon VPC subnet where you want the cluster to launch'
+  KeyPairName:
+    Type: String
+    Description: 'The name of the EC2 key pair that can be used to ssh to the master node'
+  Version:
+    Type: String
+    Description: 'Build version'
 Resources:
-  DummyServer:
-    Type: "AWS::EC2::Instance"
+  EmrServiceRole:
+    Type: AWS::IAM::Role
     Properties:
-      ImageId: ""
+      RoleName: !Sub '${Name}-emr-service-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: 'elasticmapreduce.amazonaws.com'
+            Action: sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AmazonElasticMapReduceRole'
+  EmrInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${Name}-emr-instance-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: 'ec2.amazonaws.com'
+            Action: sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AmazonElasticMapReduceforEC2Role'
+  EmrInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      InstanceProfileName: !Sub '${Name}-emr-instance-profile'
+      Path: /
+      Roles:
+        - !Ref EmrInstanceRole
+  EmrSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub '${Name}-spark-cluster-sg'
+      GroupDescription: 'Enable access to Amazon EMR with Apache Spark'
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - IpProtocol: 'tcp'
+          FromPort: '0'
+          ToPort: '65535'
+          SourceSecurityGroupId: !Ref IngressSecurityGroup
+        - IpProtocol: 'tcp'
+          FromPort: '8998'
+          ToPort: '8998'
+          SourceSecurityGroupId: !GetAtt
+            - LambdaSecurityGroup
+            - GroupId
+  EmrSparkCluster:
+    Type: AWS::EMR::Cluster
+    Properties:
+      Name: !Sub '${Name}-spark-cluster'
+      ReleaseLabel: !Ref ReleaseLabel
+      Applications:
+        - Name: 'Spark'
+        - Name: 'Livy'
+      Configurations:
+        - Classification: 'spark'
+          ConfigurationProperties:
+            maximizeResourceAllocation: 'false'
+        - Classification: 'spark-defaults'
+          ConfigurationProperties:
+            spark.dynamicAllocation.enabled: 'false'
+        - Classification: 'livy-conf'
+          ConfigurationProperties:
+            livy.spark.deploy-mode: 'cluster'
+            livy.impersonation.enabled: 'true'
+      Instances:
+        AdditionalMasterSecurityGroups:
+          - !GetAtt
+            - EmrSecurityGroup
+            - GroupId
+        AdditionalSlaveSecurityGroups:
+          - !GetAtt
+            - EmrSecurityGroup
+            - GroupId
+        MasterInstanceGroup:
+          InstanceCount: 1
+          InstanceType: !Ref MasterInstanceType
+          Market: 'ON_DEMAND'
+        CoreInstanceGroup:
+          InstanceCount: !Ref CoreInstanceCount
+          InstanceType: !Ref CoreInstanceType
+          Market: 'ON_DEMAND'
+        Ec2SubnetId: !Ref PrivateSubnet
+        Ec2KeyName: !Ref KeyPairName
+      LogUri: !Sub 's3://${Bucket}/${Name}/${Environment}/emr/log'
+      JobFlowRole: !Ref EmrInstanceProfile
+      ServiceRole: !GetAtt
+        - EmrServiceRole
+        - Arn
+      Tags:
+        - Key: 'Environment'
+          Value: !Ref Environment
+        - Key: 'Product'
+          Value: !Ref Name
+  Activity:
+    Type: AWS::StepFunctions::Activity
+    Properties:
+      Name: !Sub '${Name}-spark-job'
+      Tags:
+        - Key: 'Environment'
+          Value: !Ref Environment
+        - Key: 'Product'
+          Value: !Ref Name
+  EmrSetupStep:
+    Type: AWS::EMR::Step
+    Properties:
+      Name: 'Setup spark activity'
+      HadoopJarStep:
+        Jar: 'command-runner.jar'
+        Args:
+          - 'bash'
+          - '-c'
+          - !Join
+            - ' '
+            - - 'PID_PATH=/tmp/spark-etl-orchestration-pid;'
+              - 'if [ -f $PID_PATH ]; then'
+              - '  kill `cat $PID_PATH`;'
+              - '  rm $PID_PATH;'
+              - 'fi;'
+              - ''
+              - !Sub 'aws s3 cp s3://${Bucket}/${Name}/${Environment}/${Version}/spark-etl-orchestration-1.0-SNAPSHOT.jar . ;'
+              - !Sub 'java -jar `pwd`/spark-etl-orchestration-1.0-SNAPSHOT.jar ${Activity} > `date -u +%Y-%m-%d`.log'
+              - '& echo $! > $PID_PATH &'
+      JobFlowId: !Ref EmrSparkCluster
+      ActionOnFailure: 'CANCEL_AND_WAIT'
+  LambdaSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub '${Name}-spark-job-submitter-sg'
+      GroupDescription: 'Allow AWS Lambda access to Apache Livy server'
+      VpcId: !Ref Vpc
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - 'lambda.amazonaws.com'
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: 'Runtime'
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !GetAtt
+                  - LambdaLogGroup
+                  - Arn
+              - Effect: Allow
+                Action:
+                  - ec2:CreateNetworkInterface
+                  - ec2:DescribeNetworkInterfaces
+                  - ec2:DeleteNetworkInterface
+                Resource: '*'
+      RoleName: !Sub '${Name}-spark-job-submitter'
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: !Ref Bucket
+        S3Key: !Sub '${Name}/${Environment}/${Version}/spark-cfn-orchestration-1.0-SNAPSHOT.jar'
+      Description: 'This lambda Submit/Kill Apache Spark application on Amazon EMR via Apache Livy'
+      FunctionName: !Sub '${Name}-spark-job-submitter'
+      Handler: 'com.github.vitalibo.spark.cfn.SparkResourceProvisionHandler'
+      MemorySize: 512
+      Role:
+        Fn::GetAtt:
+          - LambdaRole
+          - Arn
+      Runtime: 'java8'
+      Timeout: 30
+      VpcConfig:
+        SecurityGroupIds:
+          - !GetAtt
+            - LambdaSecurityGroup
+            - GroupId
+        SubnetIds:
+          - !Ref PrivateSubnet
+      Tags:
+        - Key: 'Environment'
+          Value: !Ref Environment
+        - Key: 'Product'
+          Value: !Ref Name
+  LambdaLogGroup:
+    Type: 'AWS::Logs::LogGroup'
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${Name}-spark-job-submitter'
+      RetentionInDays: 3
+  LambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt
+        - LambdaFunction
+        - Arn
+      Principal: 'cloudformation.amazonaws.com'
+      SourceAccount: !Ref 'AWS::AccountId'
+      SourceArn: !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/*'
+Outputs:
+  SparkCluster:
+    Value: !Ref EmrSparkCluster
+  SparkClusterPublicDNS:
+    Value: !GetAtt
+      - EmrSparkCluster
+      - MasterPublicDNS
+  ActivityArn:
+    Value: !Ref Activity
+    Export:
+      Name: !Sub '${Name}-spark-job-activity'
+  LambdaArn:
+    Value: !GetAtt
+      - LambdaFunction
+      - Arn
+    Export:
+      Name: !Sub '${Name}-spark-job-submitter'

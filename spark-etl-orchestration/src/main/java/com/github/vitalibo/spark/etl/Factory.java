@@ -16,7 +16,7 @@ import java.util.function.BiFunction;
 
 public final class Factory {
 
-    private static final String AWS_REGION = "AWS_REGION";
+    private static final String AWS_REGION = "AWS_DEFAULT_REGION";
 
     @Getter(lazy = true)
     private static final Factory instance = new Factory(System.getenv());

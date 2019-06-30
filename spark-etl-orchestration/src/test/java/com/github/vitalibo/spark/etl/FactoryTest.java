@@ -13,7 +13,7 @@ public class FactoryTest {
 
     @BeforeMethod
     public void setUp() {
-        factory = new Factory(Collections.singletonMap("AWS_REGION", "us-west-2"));
+        factory = new Factory(Collections.singletonMap("AWS_DEFAULT_REGION", "us-west-2"));
     }
 
     @Test
