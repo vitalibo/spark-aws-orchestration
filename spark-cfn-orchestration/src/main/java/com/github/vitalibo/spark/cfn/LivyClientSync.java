@@ -64,7 +64,7 @@ public class LivyClientSync {
     public interface Factory extends BiFunction<String, Integer, LivyClientSync> {
 
         default LivyClientSync create(String host, Integer port) {
-            return apply(host, Objects.nonNull(port) ? port : 8998);
+            return apply(String.format("http://%s", host), Objects.nonNull(port) ? port : 8998);
         }
 
     }

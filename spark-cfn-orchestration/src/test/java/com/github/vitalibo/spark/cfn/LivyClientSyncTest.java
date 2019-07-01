@@ -123,7 +123,7 @@ public class LivyClientSyncTest {
 
         spyFactory.create("host", null);
 
-        Mockito.verify(spyFactory).apply("host", 8998);
+        Mockito.verify(spyFactory).apply("http://host", 8998);
     }
 
     @Test
@@ -132,7 +132,7 @@ public class LivyClientSyncTest {
 
         spyFactory.create("host", 1234);
 
-        Mockito.verify(spyFactory).apply("host", 1234);
+        Mockito.verify(spyFactory).apply("http://host", 1234);
     }
 
     private static CreateBatchRequest makeCreateBatchRequest(String name) {

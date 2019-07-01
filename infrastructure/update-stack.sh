@@ -22,7 +22,7 @@ function param() {
 NAME=`param 'Name'`
 ENVIRONMENT=`param 'Environment'`
 VERSION=`date -u +%Y%m%dT%H%M%SZ`
-BUCKET="s3://`param 'Bucket'`/$NAME/$ENVIRONMENT/$VERSION"
+BUCKET="s3://`param 'Bucket'`/$NAME/$ENVIRONMENT/$VERSION/"
 
 echo 'Package/Copy artifacts initialized'
 
@@ -30,7 +30,7 @@ mvn clean package -Dmaven.test.skip=true -P $ENVIRONMENT -f ../pom.xml
 
 for MODULE in 'cfn' 'etl'; do
   MODULE="spark-$MODULE-orchestration"
-  echo aws s3 cp "../$MODULE/target/$MODULE-1.0-SNAPSHOT.jar" $BUCKET
+  aws s3 cp "../$MODULE/target/$MODULE-1.0-SNAPSHOT.jar" $BUCKET
 done
 
 echo 'Create/Update stack initialized'

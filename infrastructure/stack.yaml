@@ -63,6 +63,18 @@ Resources:
             Principal:
               Service: 'ec2.amazonaws.com'
             Action: sts:AssumeRole
+      Policies:
+        - PolicyName: 'Runtime'
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - states:SendTaskSuccess
+                  - states:SendTaskFailure
+                  - states:SendTaskHeartbeat
+                  - states:GetActivityTask
+                Resource: '*'
       Path: /
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/service-role/AmazonElasticMapReduceforEC2Role'
@@ -141,7 +153,7 @@ Resources:
   Activity:
     Type: AWS::StepFunctions::Activity
     Properties:
-      Name: !Sub '${Name}-spark-job'
+      Name: !Sub '${Name}--spark-job'
       Tags:
         - Key: 'Environment'
           Value: !Ref Environment
