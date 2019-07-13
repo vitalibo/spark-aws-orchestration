@@ -8,7 +8,7 @@ public class ActivityTest {
     @Test
     public void testName() {
         Activity activity = new Activity()
-            .withArn("arn:aws:states:us-west-2:1234567890:activity:service-name--spark-job");
+            .withArn("arn:aws:states:us-west-2:1234567890:activity:service-name.spark-job");
 
         String actual = activity.getName();
 

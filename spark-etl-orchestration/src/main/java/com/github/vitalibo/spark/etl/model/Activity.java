@@ -25,7 +25,7 @@ public class Activity {
     }
 
     public String getName() {
-        return arn.split(":")[6].split("--")[1];
+        return arn.split(":")[6].split("\\.")[1];
     }
 
 }
