@@ -43,13 +43,13 @@ public final class Factory {
             new Rules<>(
                 ValidationRules::verifyLivyHost,
                 ValidationRules::verifyLivyPort,
-                ValidationRules::verifyPropertyFile,
-                ValidationRules::verifyPropertyClassName,
-                ValidationRules::verifyPropertyDriverMemory,
-                ValidationRules::verifyPropertyDriverCores,
-                ValidationRules::verifyPropertyExecutorMemory,
-                ValidationRules::verifyPropertyExecutorCores,
-                ValidationRules::verifyPropertyNumExecutors),
+                ValidationRules::verifyParameterFile,
+                ValidationRules::verifyParameterClassName,
+                ValidationRules::verifyParameterDriverMemory,
+                ValidationRules::verifyParameterDriverCores,
+                ValidationRules::verifyParameterExecutorMemory,
+                ValidationRules::verifyParameterExecutorCores,
+                ValidationRules::verifyParameterNumExecutors),
             (host, port) -> new LivyClientBuilder()
                 .withHost(host)
                 .withPort(port)

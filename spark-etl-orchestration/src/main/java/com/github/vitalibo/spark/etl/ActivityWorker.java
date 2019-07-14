@@ -2,6 +2,7 @@ package com.github.vitalibo.spark.etl;
 
 import com.amazonaws.services.stepfunctions.AWSStepFunctions;
 import com.amazonaws.util.json.Jackson;
+import com.github.vitalibo.spark.emr.ValidationException;
 import com.github.vitalibo.spark.etl.model.Activity;
 import com.github.vitalibo.spark.etl.model.ActivityException;
 import com.github.vitalibo.spark.etl.model.ActivityInput;
@@ -41,7 +42,7 @@ public class ActivityWorker implements AutoCloseable {
 
             proxy.taskSuccess(
                 Jackson.toJsonString(output));
-        } catch (ActivityException e) {
+        } catch (ValidationException | ActivityException e) {
             proxy.taskFailure(
                 e.getClass().getName(), e.getMessage());
         } catch (Exception e) {

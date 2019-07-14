@@ -1,6 +1,7 @@
 package com.github.vitalibo.spark.etl.facade;
 
 import com.github.vitalibo.spark.emr.LivyClient;
+import com.github.vitalibo.spark.emr.ValidationException;
 import com.github.vitalibo.spark.emr.model.*;
 import com.github.vitalibo.spark.etl.Factory;
 import com.github.vitalibo.spark.etl.StepFunctionProxy;
@@ -47,10 +48,10 @@ public class SparkJobFacadeTest {
 
     @Test
     public void testFailRules() {
-        Mockito.doThrow(ActivityException.class)
+        Mockito.doThrow(ValidationException.class)
             .when(mockRules).verify(Mockito.any());
 
-        Assert.assertThrows(ActivityException.class,
+        Assert.assertThrows(ValidationException.class,
             () -> facade.process(mockStepFunctionProxy, makeSparkActivityInput()));
         Mockito.verify(mockFactoryLivyClient, Mockito.never())
             .create(Mockito.anyString(), Mockito.anyInt());
