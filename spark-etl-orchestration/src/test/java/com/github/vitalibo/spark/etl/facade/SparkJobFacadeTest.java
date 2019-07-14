@@ -7,7 +7,7 @@ import com.github.vitalibo.spark.etl.Factory;
 import com.github.vitalibo.spark.etl.StepFunctionProxy;
 import com.github.vitalibo.spark.etl.model.ActivityException;
 import com.github.vitalibo.spark.etl.model.SparkActivityInput;
-import com.github.vitalibo.spark.etl.model.SparkActivityInput.Properties;
+import com.github.vitalibo.spark.etl.model.SparkActivityInput.Parameters;
 import com.github.vitalibo.spark.etl.model.SparkActivityOutput;
 import com.github.vitalibo.spark.etl.util.Rules;
 import org.mockito.*;
@@ -163,9 +163,9 @@ public class SparkJobFacadeTest {
         SparkActivityInput input = new SparkActivityInput();
         input.setLivyHost("livy-host");
         input.setLivyPort(8998);
-        Properties properties = new Properties();
-        properties.setName("SparkJobName");
-        input.setProperties(properties);
+        SparkActivityInput.Parameters parameters = new Parameters();
+        parameters.setName("SparkJobName");
+        input.setParameters(parameters);
         return input;
     }
 

@@ -2,7 +2,7 @@ package com.github.vitalibo.spark.etl;
 
 import com.github.vitalibo.spark.emr.ValidationException;
 import com.github.vitalibo.spark.etl.model.SparkActivityInput;
-import com.github.vitalibo.spark.etl.model.SparkActivityInput.Properties;
+import com.github.vitalibo.spark.etl.model.SparkActivityInput.Parameters;
 import org.testng.annotations.Test;
 
 public class ValidationRulesTest {
@@ -29,9 +29,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.File.*")
     public void testVerifyParameterFile() {
         SparkActivityInput activityInput = new SparkActivityInput();
-        Properties properties = new Properties();
-        activityInput.setProperties(properties);
-        properties.setFile("");
+        Parameters parameters = new Parameters();
+        activityInput.setParameters(parameters);
+        parameters.setFile("");
 
         ValidationRules.verifyParameterFile(activityInput);
     }
@@ -40,9 +40,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.ClassName.*")
     public void testVerifyParameterClassName() {
         SparkActivityInput activityInput = new SparkActivityInput();
-        Properties properties = new Properties();
-        activityInput.setProperties(properties);
-        properties.setClassName("");
+        Parameters parameters = new Parameters();
+        activityInput.setParameters(parameters);
+        parameters.setClassName("");
 
         ValidationRules.verifyParameterClassName(activityInput);
     }
@@ -51,9 +51,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.DriverMemory.*")
     public void testVerifyParameterDriverMemory() {
         SparkActivityInput activityInput = new SparkActivityInput();
-        Properties properties = new Properties();
-        activityInput.setProperties(properties);
-        properties.setDriverMemory("");
+        Parameters parameters = new SparkActivityInput.Parameters();
+        activityInput.setParameters(parameters);
+        parameters.setDriverMemory("");
 
         ValidationRules.verifyParameterDriverMemory(activityInput);
     }
@@ -62,9 +62,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.ExecutorMemory.*")
     public void testVerifyParameterExecutorMemory() {
         SparkActivityInput activityInput = new SparkActivityInput();
-        Properties properties = new Properties();
-        activityInput.setProperties(properties);
-        properties.setExecutorMemory("");
+        Parameters parameters = new Parameters();
+        activityInput.setParameters(parameters);
+        parameters.setExecutorMemory("");
 
         ValidationRules.verifyParameterExecutorMemory(activityInput);
     }
@@ -73,9 +73,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.DriverCores.*")
     public void testVerifyParameterDriverCores() {
         SparkActivityInput activityInput = new SparkActivityInput();
-        Properties properties = new Properties();
-        activityInput.setProperties(properties);
-        properties.setDriverCores(-1);
+        SparkActivityInput.Parameters parameters = new SparkActivityInput.Parameters();
+        activityInput.setParameters(parameters);
+        parameters.setDriverCores(-1);
 
         ValidationRules.verifyParameterDriverCores(activityInput);
     }
@@ -84,9 +84,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.ExecutorCores.*")
     public void testVerifyParameterExecutorCores() {
         SparkActivityInput activityInput = new SparkActivityInput();
-        Properties properties = new Properties();
-        activityInput.setProperties(properties);
-        properties.setExecutorCores(-1);
+        Parameters parameters = new SparkActivityInput.Parameters();
+        activityInput.setParameters(parameters);
+        parameters.setExecutorCores(-1);
 
         ValidationRules.verifyParameterExecutorCores(activityInput);
     }
@@ -95,9 +95,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.NumExecutors.*")
     public void testVerifyParameterNumExecutors() {
         SparkActivityInput activityInput = new SparkActivityInput();
-        Properties properties = new Properties();
-        activityInput.setProperties(properties);
-        properties.setNumExecutors(-1);
+        Parameters parameters = new Parameters();
+        activityInput.setParameters(parameters);
+        parameters.setNumExecutors(-1);
 
         ValidationRules.verifyParameterNumExecutors(activityInput);
     }

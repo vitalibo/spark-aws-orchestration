@@ -36,7 +36,8 @@ public class SparkJobFacade implements Facade<SparkActivityInput, SparkActivityO
         final LivyClient livy = livyFactory.create(input.getLivyHost(), input.getLivyPort());
 
         Batch batch = livy.createBatch(
-                CreateBatchRequestTranslator.from(input.getProperties()))
+                CreateBatchRequestTranslator.from(
+                    input.getParameters()))
             .getBatch();
         logger.info("BatchId:{} - Started ...", batch.getId());
 

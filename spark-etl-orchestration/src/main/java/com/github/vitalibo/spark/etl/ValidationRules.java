@@ -1,7 +1,7 @@
 package com.github.vitalibo.spark.etl;
 
 import com.github.vitalibo.spark.etl.model.SparkActivityInput;
-import com.github.vitalibo.spark.etl.model.SparkActivityInput.Properties;
+import com.github.vitalibo.spark.etl.model.SparkActivityInput.Parameters;
 
 import static com.github.vitalibo.spark.emr.ValidationRules.*;
 
@@ -21,52 +21,52 @@ final class ValidationRules {
     }
 
     static void verifyParameterFile(SparkActivityInput activityInput) {
-        Properties properties = activityInput.getProperties();
+        Parameters parameters = activityInput.getParameters();
 
         requirementsParameterFile.forEach(
-            properties.getFile());
+            parameters.getFile());
     }
 
     static void verifyParameterClassName(SparkActivityInput activityInput) {
-        Properties properties = activityInput.getProperties();
+        Parameters parameters = activityInput.getParameters();
 
         requirementsParameterClassName.forEach(
-            properties.getClassName());
+            parameters.getClassName());
     }
 
     static void verifyParameterDriverMemory(SparkActivityInput activityInput) {
-        Properties properties = activityInput.getProperties();
+        Parameters parameters = activityInput.getParameters();
 
         requirementsParameterDriverMemory.forEach(
-            properties.getDriverMemory());
+            parameters.getDriverMemory());
     }
 
     static void verifyParameterDriverCores(SparkActivityInput activityInput) {
-        Properties properties = activityInput.getProperties();
+        Parameters parameters = activityInput.getParameters();
 
         requirementsParameterDriverCores.forEach(
-            properties.getDriverCores());
+            parameters.getDriverCores());
     }
 
     static void verifyParameterExecutorMemory(SparkActivityInput activityInput) {
-        Properties properties = activityInput.getProperties();
+        Parameters parameters = activityInput.getParameters();
 
         requirementsParameterExecutorMemory.forEach(
-            properties.getExecutorMemory());
+            parameters.getExecutorMemory());
     }
 
     static void verifyParameterExecutorCores(SparkActivityInput activityInput) {
-        Properties properties = activityInput.getProperties();
+        Parameters parameters = activityInput.getParameters();
 
         requirementsParameterExecutorCores.forEach(
-            properties.getExecutorCores());
+            parameters.getExecutorCores());
     }
 
     static void verifyParameterNumExecutors(SparkActivityInput activityInput) {
-        Properties properties = activityInput.getProperties();
+        Parameters parameters = activityInput.getParameters();
 
         requirementsParameterNumExecutors.forEach(
-            properties.getNumExecutors());
+            parameters.getNumExecutors());
     }
 
 }

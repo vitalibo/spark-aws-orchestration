@@ -15,11 +15,11 @@ public class SparkActivityInput extends ActivityInput {
     @JsonProperty(value = "LivyPort")
     private Integer livyPort;
 
-    @JsonProperty(value = "Properties")
-    private Properties properties;
+    @JsonProperty(value = "Parameters")
+    private Parameters parameters;
 
     @Data
-    public static class Properties {
+    public static class Parameters {
 
         @JsonProperty(value = "File")
         private String file;

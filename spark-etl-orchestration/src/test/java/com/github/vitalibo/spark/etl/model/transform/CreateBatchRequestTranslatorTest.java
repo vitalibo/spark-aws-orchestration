@@ -9,8 +9,6 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static org.testng.Assert.*;
-
 public class CreateBatchRequestTranslatorTest {
 
     @Test
@@ -18,7 +16,7 @@ public class CreateBatchRequestTranslatorTest {
         SparkActivityInput activityInput = TestHelper
             .resourceAsObject("/SparkActivityInput.json", SparkActivityInput.class);
 
-        CreateBatchRequest actual = CreateBatchRequestTranslator.from(activityInput.getProperties());
+        CreateBatchRequest actual = CreateBatchRequestTranslator.from(activityInput.getParameters());
 
         Assert.assertNotNull(actual);
         Assert.assertEquals(actual.getFile(), "s3://spark/examples/jars/spark-examples-2.3.2.jar");
