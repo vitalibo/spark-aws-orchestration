@@ -16,52 +16,60 @@ public class SparkJobResourceProperties extends ResourceProperties {
     @JsonProperty(value = "LivyPort")
     private Integer livyPort;
 
-    @JsonProperty(value = "File")
-    private String file;
+    @JsonProperty(value = "Parameters")
+    private Parameters parameters;
 
-    @JsonProperty(value = "ProxyUser")
-    private String proxyUser;
+    @Data
+    public static class Parameters {
 
-    @JsonProperty(value = "ClassName")
-    private String className;
+        @JsonProperty(value = "File")
+        private String file;
 
-    @JsonProperty(value = "Args")
-    private List<String> args;
+        @JsonProperty(value = "ProxyUser")
+        private String proxyUser;
 
-    @JsonProperty(value = "Jars")
-    private List<String> jars;
+        @JsonProperty(value = "ClassName")
+        private String className;
 
-    @JsonProperty(value = "PyFiles")
-    private List<String> pyFiles;
+        @JsonProperty(value = "Args")
+        private List<String> args;
 
-    @JsonProperty(value = "Files")
-    private List<String> files;
+        @JsonProperty(value = "Jars")
+        private List<String> jars;
 
-    @JsonProperty(value = "DriverMemory")
-    private String driverMemory;
+        @JsonProperty(value = "PyFiles")
+        private List<String> pyFiles;
 
-    @JsonProperty(value = "DriverCores")
-    private Integer driverCores;
+        @JsonProperty(value = "Files")
+        private List<String> files;
 
-    @JsonProperty(value = "ExecutorMemory")
-    private String executorMemory;
+        @JsonProperty(value = "DriverMemory")
+        private String driverMemory;
 
-    @JsonProperty(value = "ExecutorCores")
-    private Integer executorCores;
+        @JsonProperty(value = "DriverCores")
+        private Integer driverCores;
 
-    @JsonProperty(value = "NumExecutors")
-    private Integer numExecutors;
+        @JsonProperty(value = "ExecutorMemory")
+        private String executorMemory;
 
-    @JsonProperty(value = "Archives")
-    private List<String> archives;
+        @JsonProperty(value = "ExecutorCores")
+        private Integer executorCores;
 
-    @JsonProperty(value = "Queue")
-    private String queue;
+        @JsonProperty(value = "NumExecutors")
+        private Integer numExecutors;
 
-    @JsonProperty(value = "Name")
-    private String name;
+        @JsonProperty(value = "Archives")
+        private List<String> archives;
 
-    @JsonProperty(value = "Configuration")
-    private Map<String, String> configuration;
+        @JsonProperty(value = "Queue")
+        private String queue;
+
+        @JsonProperty(value = "Name")
+        private String name;
+
+        @JsonProperty(value = "Configuration")
+        private Map<String, String> configuration;
+
+    }
 
 }

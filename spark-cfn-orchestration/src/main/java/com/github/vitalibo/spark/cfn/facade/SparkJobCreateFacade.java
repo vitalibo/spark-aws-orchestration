@@ -26,7 +26,8 @@ public class SparkJobCreateFacade implements CreateFacade<SparkJobResourceProper
                 properties.getLivyHost(), properties.getLivyPort());
 
         Batch batch = livy.createBatchSync(
-                CreateBatchRequestTranslator.from(properties),
+                CreateBatchRequestTranslator.from(
+                    properties.getParameters()),
                 context.getRemainingTimeInMillis())
             .getBatch();
 

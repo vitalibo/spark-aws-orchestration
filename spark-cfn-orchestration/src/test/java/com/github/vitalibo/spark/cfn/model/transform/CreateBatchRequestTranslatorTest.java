@@ -16,7 +16,7 @@ public class CreateBatchRequestTranslatorTest {
         SparkJobResourceProperties properties = TestHelper
             .resourceAsObject("/SparkJobResourceProperties.json", SparkJobResourceProperties.class);
 
-        CreateBatchRequest actual = CreateBatchRequestTranslator.from(properties);
+        CreateBatchRequest actual = CreateBatchRequestTranslator.from(properties.getParameters());
 
         Assert.assertNotNull(actual);
         Assert.assertEquals(actual.getFile(), "s3://spark/examples/jars/spark-examples-2.3.2.jar");

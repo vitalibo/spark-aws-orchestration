@@ -58,7 +58,7 @@ public class SparkJobUpdateFacadeTest {
         Mockito.verify(mockLivyFactory).create(properties.getLivyHost(), properties.getLivyPort());
         Mockito.verify(mockLivyClientSync).createBatchSync(captorCreateBatchRequest.capture(), Mockito.eq(9876L));
         CreateBatchRequest request = captorCreateBatchRequest.getValue();
-        Assert.assertEquals(request.getName(), properties.getName());
+        Assert.assertEquals(request.getName(), properties.getParameters().getName());
         Mockito.verify(spyFacade, Mockito.never()).deleteOld(Mockito.any(), Mockito.anyString());
     }
 
@@ -86,7 +86,7 @@ public class SparkJobUpdateFacadeTest {
         Mockito.verify(mockLivyFactory).create(properties.getLivyHost(), properties.getLivyPort());
         Mockito.verify(mockLivyClientSync).createBatchSync(captorCreateBatchRequest.capture(), Mockito.eq(9876L));
         CreateBatchRequest request = captorCreateBatchRequest.getValue();
-        Assert.assertEquals(request.getName(), properties.getName());
+        Assert.assertEquals(request.getName(), properties.getParameters().getName());
         Mockito.verify(spyFacade).deleteOld(oldProperties, "application_1234567890_0123#123");
     }
 
@@ -116,7 +116,9 @@ public class SparkJobUpdateFacadeTest {
         SparkJobResourceProperties properties = new SparkJobResourceProperties();
         properties.setLivyHost(host);
         properties.setLivyPort(port);
-        properties.setName(name);
+        SparkJobResourceProperties.Parameters parameters = new SparkJobResourceProperties.Parameters();
+        parameters.setName(name);
+        properties.setParameters(parameters);
         return properties;
     }
 

@@ -1,33 +1,35 @@
 {
-  "ServiceToken": "arn:aws:lambda:us-west-1:1234567890:function:spark",
-  "LivyHost": "ip-10-1-234-56.us-west-1.compute.internal",
-  "LivyPort": 8998,
-  "File": "s3://spark/examples/jars/spark-examples-2.3.2.jar",
-  "ProxyUser": "hadoop",
-  "ClassName": "org.apache.spark.examples.SparkPi",
-  "Args": [
-    "10"
-  ],
-  "Jars": [
-    "s3://spark/examples/jars/spark-examples.jar"
-  ],
-  "PyFiles": [
-    "s3://spark/examples/jars/spark-examples.py"
-  ],
-  "Files": [
-    "s3://spark/examples/jars/spark-examples.ini"
-  ],
-  "DriverMemory": "512m",
-  "DriverCores": 1,
-  "ExecutorMemory": "2G",
-  "ExecutorCores": 2,
-  "NumExecutors": 3,
-  "Archives": [
-    "s3://spark/examples/jars/spark-examples.zip"
-  ],
-  "Queue": "default",
-  "Name": "SparkPi",
-  "Configuration": {
-    "spark.master": "spark://5.6.7.8:7077"
-  }
+    "ServiceToken": "arn:aws:lambda:us-west-1:1234567890:function:spark",
+    "LivyHost": "ip-10-1-234-56.us-west-1.compute.internal",
+    "LivyPort": 8998,
+    "Parameters": {
+        "File": "s3://spark/examples/jars/spark-examples-2.3.2.jar",
+        "ProxyUser": "hadoop",
+        "ClassName": "org.apache.spark.examples.SparkPi",
+        "Args": [
+            "10"
+        ],
+        "Jars": [
+            "s3://spark/examples/jars/spark-examples.jar"
+        ],
+        "PyFiles": [
+            "s3://spark/examples/jars/spark-examples.py"
+        ],
+        "Files": [
+            "s3://spark/examples/jars/spark-examples.ini"
+        ],
+        "DriverMemory": "512m",
+        "DriverCores": 1,
+        "ExecutorMemory": "2G",
+        "ExecutorCores": 2,
+        "NumExecutors": 3,
+        "Archives": [
+            "s3://spark/examples/jars/spark-examples.zip"
+        ],
+        "Queue": "default",
+        "Name": "SparkPi",
+        "Configuration": {
+            "spark.master": "spark://5.6.7.8:7077"
+        }
+    }
 }

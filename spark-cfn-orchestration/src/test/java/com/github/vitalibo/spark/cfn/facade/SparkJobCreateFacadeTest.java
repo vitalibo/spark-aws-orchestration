@@ -53,7 +53,7 @@ public class SparkJobCreateFacadeTest {
         Mockito.verify(mockLivyFactory).create(properties.getLivyHost(), properties.getLivyPort());
         Mockito.verify(mockLivyClientSync).createBatchSync(captorCreateBatchRequest.capture(), Mockito.eq(9876L));
         CreateBatchRequest request = captorCreateBatchRequest.getValue();
-        Assert.assertEquals(request.getName(), properties.getName());
+        Assert.assertEquals(request.getName(), properties.getParameters().getName());
     }
 
     @Test
@@ -69,7 +69,9 @@ public class SparkJobCreateFacadeTest {
         SparkJobResourceProperties properties = new SparkJobResourceProperties();
         properties.setLivyHost("Livy Host");
         properties.setLivyPort(12456);
-        properties.setName("Application Name");
+        SparkJobResourceProperties.Parameters parameters = new SparkJobResourceProperties.Parameters();
+        parameters.setName("Application Name");
+        properties.setParameters(parameters);
         return properties;
     }
 

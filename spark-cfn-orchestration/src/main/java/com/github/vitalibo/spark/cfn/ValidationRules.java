@@ -2,6 +2,7 @@ package com.github.vitalibo.spark.cfn;
 
 import com.github.vitalibo.cfn.resource.ResourceProvisionException;
 import com.github.vitalibo.spark.cfn.model.SparkJobResourceProperties;
+import com.github.vitalibo.spark.cfn.model.SparkJobResourceProperties.Parameters;
 import com.github.vitalibo.spark.emr.ValidationException;
 
 import static com.github.vitalibo.spark.emr.ValidationRules.*;
@@ -24,45 +25,59 @@ final class ValidationRules {
     }
 
     static void verifyParameterFile(SparkJobResourceProperties properties) {
+        Parameters parameters = properties.getParameters();
+
         wrapValidationException(() ->
             requirementsParameterFile.forEach(
-                properties.getFile()));
+                parameters.getFile()));
     }
 
     static void verifyParameterClassName(SparkJobResourceProperties properties) {
+        Parameters parameters = properties.getParameters();
+
         wrapValidationException(() ->
             requirementsParameterClassName.forEach(
-                properties.getClassName()));
+                parameters.getClassName()));
     }
 
     static void verifyParameterDriverMemory(SparkJobResourceProperties properties) {
+        Parameters parameters = properties.getParameters();
+
         wrapValidationException(() ->
             requirementsParameterDriverMemory.forEach(
-                properties.getDriverMemory()));
+                parameters.getDriverMemory()));
     }
 
     static void verifyParameterDriverCores(SparkJobResourceProperties properties) {
+        Parameters parameters = properties.getParameters();
+
         wrapValidationException(() ->
             requirementsParameterDriverCores.forEach(
-                properties.getDriverCores()));
+                parameters.getDriverCores()));
     }
 
     static void verifyParameterExecutorMemory(SparkJobResourceProperties properties) {
+        Parameters parameters = properties.getParameters();
+
         wrapValidationException(() ->
             requirementsParameterExecutorMemory.forEach(
-                properties.getExecutorMemory()));
+                parameters.getExecutorMemory()));
     }
 
     static void verifyParameterExecutorCores(SparkJobResourceProperties properties) {
+        Parameters parameters = properties.getParameters();
+
         wrapValidationException(() ->
             requirementsParameterExecutorCores.forEach(
-                properties.getExecutorCores()));
+                parameters.getExecutorCores()));
     }
 
     static void verifyParameterNumExecutors(SparkJobResourceProperties properties) {
+        Parameters parameters = properties.getParameters();
+
         wrapValidationException(() ->
             requirementsParameterNumExecutors.forEach(
-                properties.getNumExecutors()));
+                parameters.getNumExecutors()));
     }
 
     private static void wrapValidationException(Runnable f) {

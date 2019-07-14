@@ -2,6 +2,7 @@ package com.github.vitalibo.spark.cfn;
 
 import com.github.vitalibo.cfn.resource.ResourceProvisionException;
 import com.github.vitalibo.spark.cfn.model.SparkJobResourceProperties;
+import com.github.vitalibo.spark.cfn.model.SparkJobResourceProperties.Parameters;
 import org.testng.annotations.Test;
 
 public class ValidationRulesTest {
@@ -28,7 +29,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.File.*")
     public void testVerifyParameterFile() {
         SparkJobResourceProperties properties = new SparkJobResourceProperties();
-        properties.setFile("");
+        Parameters parameters = new Parameters();
+        properties.setParameters(parameters);
+        parameters.setFile("");
 
         ValidationRules.verifyParameterFile(properties);
     }
@@ -37,7 +40,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.ClassName.*")
     public void testVerifyParameterClassName() {
         SparkJobResourceProperties properties = new SparkJobResourceProperties();
-        properties.setClassName("");
+        Parameters parameters = new Parameters();
+        properties.setParameters(parameters);
+        parameters.setClassName("");
 
         ValidationRules.verifyParameterClassName(properties);
     }
@@ -46,7 +51,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.DriverMemory.*")
     public void testVerifyParameterDriverMemory() {
         SparkJobResourceProperties properties = new SparkJobResourceProperties();
-        properties.setDriverMemory("");
+        Parameters parameters = new Parameters();
+        properties.setParameters(parameters);
+        parameters.setDriverMemory("");
 
         ValidationRules.verifyParameterDriverMemory(properties);
     }
@@ -55,7 +62,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.ExecutorMemory.*")
     public void testVerifyParameterExecutorMemory() {
         SparkJobResourceProperties properties = new SparkJobResourceProperties();
-        properties.setExecutorMemory("");
+        Parameters parameters = new Parameters();
+        properties.setParameters(parameters);
+        parameters.setExecutorMemory("");
 
         ValidationRules.verifyParameterExecutorMemory(properties);
     }
@@ -64,7 +73,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.DriverCores.*")
     public void testVerifyParameterDriverCores() {
         SparkJobResourceProperties properties = new SparkJobResourceProperties();
-        properties.setDriverCores(-1);
+        Parameters parameters = new Parameters();
+        properties.setParameters(parameters);
+        parameters.setDriverCores(-1);
 
         ValidationRules.verifyParameterDriverCores(properties);
     }
@@ -73,7 +84,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.ExecutorCores.*")
     public void testVerifyParameterExecutorCores() {
         SparkJobResourceProperties properties = new SparkJobResourceProperties();
-        properties.setExecutorCores(-1);
+        Parameters parameters = new Parameters();
+        properties.setParameters(parameters);
+        parameters.setExecutorCores(-1);
 
         ValidationRules.verifyParameterExecutorCores(properties);
     }
@@ -82,7 +95,9 @@ public class ValidationRulesTest {
         expectedExceptionsMessageRegExp = ".*Parameters\\.NumExecutors.*")
     public void testVerifyParameterNumExecutors() {
         SparkJobResourceProperties properties = new SparkJobResourceProperties();
-        properties.setNumExecutors(-1);
+        Parameters parameters = new Parameters();
+        properties.setParameters(parameters);
+        parameters.setNumExecutors(-1);
 
         ValidationRules.verifyParameterNumExecutors(properties);
     }
