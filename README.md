@@ -76,15 +76,19 @@ Following sample demonstrate usage AWS Step Functions custom Apache Spark activi
       "Type": "Task",
       "Resource": "arn:aws:states:us-east-1:123456789012:activity:example.spark-job",
       "Parameters": {
-        "Name": "Spark Pi",
-        "ClassName": "org.apache.spark.examples.SparkPi",
-        "NumExecutors": 1,
-        "DriverMemory": "512m",
-        "ExecutorMemory": "512m",
-        "ExecutorCores": 1,
-        "Args": [
-          "10"
-        ]
+        "LivyHost.$": "$.SparkClusterPublicDNS",
+        "LivyPort": 8998,
+        "Parameters": {
+          "Name": "Spark Pi",
+          "ClassName": "org.apache.spark.examples.SparkPi",
+          "NumExecutors": 1,
+          "DriverMemory": "512m",
+          "ExecutorMemory": "512m",
+          "ExecutorCores": 1,
+          "Args": [
+            "10"
+          ]
+        }
       },
       "End": true
     }  
