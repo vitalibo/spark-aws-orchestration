@@ -233,7 +233,7 @@ Resources:
           - LambdaRole
           - Arn
       Runtime: 'java8'
-      Timeout: 30
+      Timeout: 300
       VpcConfig:
         SecurityGroupIds:
           - !GetAtt
