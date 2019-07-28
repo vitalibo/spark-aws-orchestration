@@ -70,8 +70,7 @@ Following sample demonstrate usage AWS Step Functions custom Apache Spark activi
   "Comment": "Spark ETL State Machine",
   "StartAt": "SparkPi",
   "TimeoutSeconds": 300,
-  "States":
-  {
+  "States": {
     "SparkPi": {
       "Type": "Task",
       "Resource": "arn:aws:states:us-east-1:123456789012:activity:example.spark-job",
