@@ -27,7 +27,7 @@
         <jdk.version>1.8</jdk.version>
         <cfn.custom.resource.version>1.0.0</cfn.custom.resource.version>
         <aws.version>1.11.578</aws.version>
-        <jackson.version>2.9.9</jackson.version>
+        <jackson.version>2.12.6</jackson.version>
         <jersey.version>2.29</jersey.version>
         <slf4j.version>1.7.25</slf4j.version>
         <lombok.version>1.18.0</lombok.version>
