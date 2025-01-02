@@ -17,7 +17,7 @@ This guide provide samples of deployment and orchestration Apache Spark applicat
 One of the problems that solved this solution is deployment Apache Spark application.
 Integration with AWS CloudFormation implemented via [Custom Resource](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-custom-resources.html) (high level diagram you can see below).
 
-![CloudFormation_Diagram](https://fwtbbmf399.execute-api.us-east-1.amazonaws.com/Prod/svg?source=https://raw.githubusercontent.com/vitalibo/spark-aws-orchestration/master/README.md&name=cloudformation.svg)
+![CloudFormation_Diagram](https://markdown-inline-svg.vitalibo.click/svg?source=https://raw.githubusercontent.com/vitalibo/spark-aws-orchestration/master/README.md&name=cloudformation.svg)
 
 <details> 
 <summary>SVG code</summary>
@@ -64,7 +64,7 @@ Another popular problem is manage ETL task.
 Amazon EMR provide out of the box installation of [Apache Oozie](https://oozie.apache.org), but no integration with others AWS services and difficult configure, manage Apache Spark applications might not be suitable for some users.
 Integration with AWS Step Functions allow simplify deployment and manage ETL tasks with moder UI and integrations with other AWS services (high level solution diagram you can see below).
 
-![StepFunctions_Diagram](https://fwtbbmf399.execute-api.us-east-1.amazonaws.com/Prod/svg?source=https://raw.githubusercontent.com/vitalibo/spark-aws-orchestration/master/README.md&name=stepfunctions.svg)
+![StepFunctions_Diagram](https://markdown-inline-svg.vitalibo.click/svg?source=https://raw.githubusercontent.com/vitalibo/spark-aws-orchestration/master/README.md&name=stepfunctions.svg)
 
 <details> 
 <summary>SVG code</summary>
